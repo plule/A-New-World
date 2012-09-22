@@ -1,6 +1,7 @@
 Class = require 'hump.class'
+Box = require 'box'
 
-local Level = Class
+Level = Class
 {	name = "Level",
 	function(self, x, y, level, scale)
 		self.sizeX = 1024
@@ -9,6 +10,7 @@ local Level = Class
 		self.y = y
 		self.scale = scale or 1 -- STABLE
 		self.level = level
+		self.boxes = {} -- Ne pas générer les boxes ici !
 	end
 }
 
@@ -22,6 +24,10 @@ function Level:draw()
 	love.graphics.setColor(255,0,0)
 	love.graphics.setLine(2, "smooth")
 	love.graphics.rectangle("line", x, y, sizeX, sizeY)
+
+	for _,box in ipairs(self.boxes) do
+		box:draw()
+	end
 end
 
 function Level:setPosition(x,y)
@@ -34,6 +40,31 @@ end
 
 function Level:setScale(scale)
 	self.scale = scale
+end
+
+function Level:generateBoxes()
+	self.boxes = {}
+	local boxes = self.boxes
+	local y = boxStartY
+	for i=1,nBoxesY do
+		local x = boxStartX
+		for j=1,nBoxesX do
+			table.insert(boxes, Box(x,y,boxSizeX,boxSizeY,'type',self.level+1,screenFactor))
+			x = x + boxSizeX + boxSpaceX
+		end
+		y = y + boxSizeY + boxSpaceY
+	end
+end
+
+function Level:boxUnder(x,y)
+	local underbox = nil
+	for _,box in ipairs(self.boxes) do
+		if(box:isClicked(x,y)) then
+			underbox = box
+			dbg("A box is clicked")
+		end
+	end
+	return underbox
 end
 
 return Level

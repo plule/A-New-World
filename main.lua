@@ -1,9 +1,25 @@
 Gamestate = require 'hump.gamestate'
 game = require 'game'
 
+function dbg(...)
+	print("[debug]",...)
+end
+
 function love.load()
 	Height = love.graphics.getHeight()
 	Width = love.graphics.getWidth()
+
+
+	screenFactor = 0.02
+	nBoxesX = 3
+	nBoxesY = 4
+	boxSizeX = 50
+	boxSizeY = 50
+	boxSpaceX = 10
+	boxSpaceY = 10
+	boxStartX = 30
+	boxStartY = 30
+
 	Gamestate.switch(game)
 end
 
