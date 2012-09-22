@@ -79,11 +79,11 @@ function game:switchToNextLevel(box)
 	self.nextLevel:generateBoxes()
 	self.switching = true
 	local destX,destY = self.nextLevel:getPosition()
-	self.moveTween = tween(3, self.camera, {x=destX+screenFactor*Width/2,y=destY+screenFactor*Height/2}, 'outCubic',
+	self.moveTween = tween(3, self.camera, {x=destX+screenFactor*Width/2,y=destY+screenFactor*Height/2}, 'outQuint',
 						   function()
 							   self.moveTween = nil
 						   end)
-	self.zoomTween = tween(3, self.camera, {zoom=1/screenFactor}, 'inCubic',
+	self.zoomTween = tween(3, self.camera, {zoom=1/screenFactor}, 'inQuad',
 						   function()
 								   self.zoomTween = nil
 						   end)
