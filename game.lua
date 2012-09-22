@@ -2,13 +2,15 @@ Camera = require 'hump.camera'
 Level = require 'level'
 --Box = require 'box'
 local tween = require 'tween.tween'
+require("AnAL")
 
 game = Gamestate.new()
 
 function game:init()
 	self.Background = love.graphics.newImage('pics/back01_avec_bat.jpg')
-	self.Case = love.graphics.newImage('pics/casetest.jpg')
-
+	local casePic = love.graphics.newImage('pics/casetest.jpg')
+	self.Case = newAnimation(casePic, 400, 400, 0.2, 0)
+	self.Case:setMode("loop")
 	nBoxesX = 6
 	nBoxesY = 6
 	boxSizeX = 50
@@ -18,7 +20,7 @@ function game:init()
 	boxStartX = 300+boxSizeX/2
 	boxStartY = 153+boxSizeY/2
 	
-	boxFactor = Width/self.Case:getWidth()
+	boxFactor = Width/400--self.Case:getWidth()
 	screenFactor = 0.0185
 end
 
@@ -39,6 +41,7 @@ function game:generateLevel(level)
 end
 
 function game:update(dt)
+	self.Case:update(dt)
 	tween.update(dt)
 	if(self.switching and not self.zoomTween and not self.moveTween) then
 		self.switching = false
