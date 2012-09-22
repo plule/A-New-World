@@ -13,7 +13,7 @@ local Level = Class
 }
 
 function Level:draw()
-	love.graphics.setColor(self.level*10, self.level*10, self.level*10)
+	love.graphics.setColor(self.level*100, self.level*100, self.level*100)
 	local sizeX,sizeY = self.sizeX*self.scale, self.sizeY*self.scale
 	local x = self.x-sizeX/2
 	local y = self.y-sizeY/2
@@ -26,6 +26,14 @@ end
 
 function Level:setPosition(x,y)
 	self.x,self.y = x,y
+end
+
+function Level:getPosition()
+	return self.x,self.y
+end
+
+function Level:setScale(scale)
+	self.scale = scale
 end
 
 return Level
