@@ -23,6 +23,7 @@ function Level:draw()
 
 	love.graphics.setColor(255,255,255)
 	love.graphics.draw(game.Background,x,y,0,self.scale,self.scale)
+	love.graphics.draw(game.Batiment,x+250*self.scale,y+103*self.scale,0,self.scale,self.scale)
 
 	love.graphics.push()
 	love.graphics.translate(x,y)

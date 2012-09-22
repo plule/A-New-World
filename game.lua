@@ -9,7 +9,8 @@ game = Gamestate.new()
 function game:init()
 	nBoxesX = 6
 	nBoxesY = 6
-	self.Background = love.graphics.newImage('pics/back01_avec_bat.jpg')
+	self.Background = love.graphics.newImage('pics/back01.jpg')
+	self.Batiment = love.graphics.newImage('pics/batcool.jpg')
 	local casePic = love.graphics.newImage('pics/casetest.jpg')
 	self.CasePics = {}
 	for i = 1,nBoxesX*nBoxesY do
@@ -88,7 +89,7 @@ function game:switchToNextLevel(box)
 end
 
 function game:mousepressed(x,y)
-	local clickedBox =  self.level:boxUnder(self.camera:cameraCoords(x,y))
+	local clickedBox =  self.level:boxUnder(x-boxSizeX/2,y-boxSizeY/2)
 	if(clickedBox and not self.switching) then
 		self:switchToNextLevel(clickedBox)
 	end
