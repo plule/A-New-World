@@ -24,7 +24,7 @@ function Box:draw()
 	love.graphics.setColor(0,255,0)
 	love.graphics.setLine(2, "smooth")
 	love.graphics.rectangle("line", x, y, sizeX, sizeY)
-	self.level:draw()
+--	self.level:draw()
 end
 
 function Box:isClicked(x,y)

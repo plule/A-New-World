@@ -24,10 +24,12 @@ function Level:draw()
 	love.graphics.setColor(255,0,0)
 	love.graphics.setLine(2, "smooth")
 	love.graphics.rectangle("line", x, y, sizeX, sizeY)
-
+	love.graphics.push()
+	love.graphics.scale(self.scale)
 	for _,box in ipairs(self.boxes) do
 		box:draw()
 	end
+	love.graphics.pop()
 end
 
 function Level:setPosition(x,y)
