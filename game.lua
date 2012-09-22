@@ -63,10 +63,11 @@ function game:update(dt)
 end
 
 function game:draw()
+	love.graphics.draw(self.Background,0,0)
 	self.camera:attach()
-	self.level:draw()
+	self.level:draw(false)
 	if self.nextLevel then
-		self.nextLevel:draw()
+		self.nextLevel:draw(true)
 	end
 	self.camera:detach()
 	love.graphics.print("A New World", 10, 10)

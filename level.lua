@@ -15,14 +15,16 @@ Level = Class
 	end
 }
 
-function Level:draw()
+function Level:draw(background)
 	love.graphics.setColor(self.level*100, self.level*100, self.level*100)
 	local sizeX,sizeY = self.sizeX*self.scale, self.sizeY*self.scale
 	local x = self.x
 	local y = self.y
 
 	love.graphics.setColor(255,255,255)
-	love.graphics.draw(game.Background,x,y,0,self.scale,self.scale)
+	if background then
+		love.graphics.draw(game.Background,x,y,0,self.scale,self.scale)
+	end
 	love.graphics.draw(game.Batiment,x+250*self.scale,y+103*self.scale,0,self.scale,self.scale)
 
 	love.graphics.push()
