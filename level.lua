@@ -30,9 +30,9 @@ function Level:draw()
 	love.graphics.push()
 	love.graphics.translate(x,y)
 	love.graphics.scale(self.scale,self.scale)
-	for _,box in ipairs(self.boxes) do
+	for i,box in ipairs(self.boxes) do
 		love.graphics.setColor(255,255,255)
-		box:draw()
+		box:draw(i)
 	end
 	love.graphics.pop()
 end

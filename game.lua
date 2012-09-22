@@ -7,12 +7,18 @@ require("AnAL")
 game = Gamestate.new()
 
 function game:init()
-	self.Background = love.graphics.newImage('pics/back01_avec_bat.jpg')
-	local casePic = love.graphics.newImage('pics/casetest.jpg')
-	self.Case = newAnimation(casePic, 400, 400, 0.2, 0)
-	self.Case:setMode("loop")
 	nBoxesX = 6
 	nBoxesY = 6
+	self.Background = love.graphics.newImage('pics/back01_avec_bat.jpg')
+	local casePic = love.graphics.newImage('pics/casetest.jpg')
+	self.CasePics = {}
+	for i = 1,nBoxesX*nBoxesY do
+		local case = newAnimation(casePic, 400, 400, 0.2, 0)
+		case:update(math.random())
+		table.insert(self.CasePics,case)
+	end
+	self.Case = newAnimation(casePic, 400, 400, 0.2, 0)
+	self.Case:setMode("loop")
 	boxSizeX = 50
 	boxSizeY = 50
 	boxSpaceX = 25
@@ -41,7 +47,10 @@ function game:generateLevel(level)
 end
 
 function game:update(dt)
-	self.Case:update(dt)
+	for _,case in ipairs(self.CasePics) do
+		case:update(dt)
+	end
+--	self.Case:update(dt)
 	tween.update(dt)
 	if(self.switching and not self.zoomTween and not self.moveTween) then
 		self.switching = false
