@@ -3,9 +3,23 @@ Level = require 'level'
 --Box = require 'box'
 local tween = require 'tween.tween'
 
-local game = Gamestate.new()
+game = Gamestate.new()
 
 function game:init()
+	self.Background = love.graphics.newImage('pics/back01_avec_bat.jpg')
+	self.Case = love.graphics.newImage('pics/casetest.jpg')
+
+	nBoxesX = 6
+	nBoxesY = 6
+	boxSizeX = 50
+	boxSizeY = 50
+	boxSpaceX = 25
+	boxSpaceY = 25
+	boxStartX = 300+boxSizeX/2
+	boxStartY = 153+boxSizeY/2
+	
+	boxFactor = Width/self.Case:getWidth()
+	screenFactor = 0.0185
 end
 
 function game:enter()

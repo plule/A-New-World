@@ -1,5 +1,6 @@
 Class = require 'hump.class'
 Box = require 'box'
+Camera = require 'hump.camera'
 
 Level = Class
 {	name = "Level",
@@ -23,13 +24,21 @@ function Level:draw()
 	love.graphics.rectangle("fill", x, y, sizeX, sizeY)
 	love.graphics.setColor(255,0,0)
 	love.graphics.setLine(2, "smooth")
+	love.graphics.setColor(255,255,255)
+	love.graphics.draw(game.Background,x,y,0,self.scale,self.scale)
+
+	local camera
+	if(self.scale ~= 1) then
+		camera = Camera(self.x*Width/2,self.y*Height/2, self.scale, 0)
+		camera:attach()
+	end
 	love.graphics.rectangle("line", x, y, sizeX, sizeY)
-	love.graphics.push()
-	love.graphics.scale(self.scale)
 	for _,box in ipairs(self.boxes) do
 		box:draw()
 	end
-	love.graphics.pop()
+	if(self.scale ~=1) then
+		camera:detach()
+	end
 end
 
 function Level:setPosition(x,y)
