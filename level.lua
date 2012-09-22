@@ -25,16 +25,19 @@ function Level:draw(background)
 	if background then
 		love.graphics.draw(game.Background,x,y,0,self.scale,self.scale)
 	end
+	game.desaturate:send("desaturation_factor",0)
+	love.graphics.setPixelEffect(game.desaturate)
 	love.graphics.draw(game.Batiment,x+250*self.scale,y+103*self.scale,0,self.scale,self.scale)
 
 	love.graphics.push()
 	love.graphics.translate(x,y)
 	love.graphics.scale(self.scale,self.scale)
 	for i,box in ipairs(self.boxes) do
-		love.graphics.setColor(255,255,255)
+--		love.graphics.setPixelEffect(game.desaturate)
 		box:draw(i)
 	end
 	love.graphics.pop()
+	love.graphics.setPixelEffect()
 end
 
 function Level:setPosition(x,y)

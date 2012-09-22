@@ -23,14 +23,8 @@ function Box:draw(i)
 	local x = self.x
 	local y = self.y
 	local sizeX,sizeY = self.sizeX, self.sizeY
---	love.graphics.draw(game.Case, x,y, 0, boxSizeX/game.Case:getWidth(), boxSizeY/game.Case:getHeight())
 	game.CasePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
---	love.graphics.setColor(255,255,255)
---	love.graphics.rectangle("fill", x, y, sizeX, sizeY)
---	love.graphics.setColor(0,255,0)
---	love.graphics.setLine(2, "smooth")
---	love.graphics.rectangle("line", x, y, sizeX, sizeY)
-	self.level:draw()
+--	self.level:draw(true)
 end
 
 function Box:isClicked(x,y)

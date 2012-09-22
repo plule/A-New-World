@@ -20,6 +20,9 @@ function game:init()
 	end
 	self.Case = newAnimation(casePic, 400, 400, 0.2, 0)
 	self.Case:setMode("loop")
+
+	self.desaturate = love.graphics.newPixelEffect(love.filesystem.read('desaturate.frag'))
+
 	boxSizeX = 50
 	boxSizeY = 50
 	boxSpaceX = 25
