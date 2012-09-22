@@ -21,24 +21,20 @@ function Level:draw()
 	local x = self.x-sizeX/2
 	local y = self.y-sizeY/2
 
-	love.graphics.rectangle("fill", x, y, sizeX, sizeY)
-	love.graphics.setColor(255,0,0)
-	love.graphics.setLine(2, "smooth")
+--	love.graphics.rectangle("fill", x, y, sizeX, sizeY)
+--	love.graphics.setColor(255,0,0)
+--	love.graphics.setLine(2, "smooth")
 	love.graphics.setColor(255,255,255)
 	love.graphics.draw(game.Background,x,y,0,self.scale,self.scale)
 
-	local camera
-	if(self.scale ~= 1) then
-		camera = Camera(self.x*Width/2,self.y*Height/2, self.scale, 0)
-		camera:attach()
-	end
-	love.graphics.rectangle("line", x, y, sizeX, sizeY)
+	love.graphics.push()
+	love.graphics.translate(x,y)
+	love.graphics.scale(self.scale,self.scale)
 	for _,box in ipairs(self.boxes) do
+		love.graphics.setColor(255,255,255)
 		box:draw()
 	end
-	if(self.scale ~=1) then
-		camera:detach()
-	end
+	love.graphics.pop()
 end
 
 function Level:setPosition(x,y)

@@ -2,7 +2,7 @@ Gamestate = require 'hump.gamestate'
 game = require 'game'
 
 function dbg(...)
-	print("[debug]",...)
+--	print("[debug]",...)
 end
 
 function love.load()

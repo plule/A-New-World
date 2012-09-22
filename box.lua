@@ -20,8 +20,8 @@ local Box = Class
 }
 
 function Box:draw()
-	local x = self.x-self.sizeX/2
-	local y = self.y-self.sizeY/2
+	local x = (self.x-self.sizeX/2)--*scale
+	local y = (self.y-self.sizeY/2)--*scale
 	local sizeX,sizeY = self.sizeX, self.sizeY
 	love.graphics.draw(game.Case, x,y, 0, boxSizeX/game.Case:getWidth(), boxSizeY/game.Case:getHeight())
 --	love.graphics.setColor(255,255,255)
