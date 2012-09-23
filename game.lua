@@ -81,10 +81,10 @@ end
 function game:draw()
 	love.graphics.draw(self.Background,0,0)
 	self.camera:attach()
-	if self.nextLevel then
-		self.nextLevel:draw(true)
-	end
 	self.level:draw(false)
+--	if self.nextLevel then
+--		self.nextLevel:draw(true)
+--	end
 	self.camera:detach()
 	love.graphics.setLine(1,'smooth')
 	love.graphics.setColor(255,255,255)

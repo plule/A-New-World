@@ -15,6 +15,8 @@ local Box = Class
 	  local sy = self.sizeY/400--game.Case:getHeight()
 	  local dx = x + sx*202
 	  local dy = y + sy*111
+	  self.dx = dx
+	  self.dy = dy
 	  self.level = Level(dx, dy, level, screenFactor)
   end
 }
@@ -23,9 +25,17 @@ function Box:draw(i)
 	local x = self.x
 	local y = self.y
 	local sizeX,sizeY = self.sizeX, self.sizeY
-	love.graphics.draw(game.Miniature,self.level.dx,self.level.dy,screenFactor,screenFactor)
+	game.desaturate:send("desaturation_factor",self.level.level/10)
+	love.graphics.setPixelEffect(game.desaturate)
+	love.graphics.draw(game.Miniature,self.dx,self.dy,0,boxSizeX/400,boxSizeY/400)
+	love.graphics.setPixelEffect()
+	if(self.level == game.nextLevel) then
+		self.level:draw(true)
+	end
+	game.desaturate:send("desaturation_factor",self.level.level/10)
+	love.graphics.setPixelEffect(game.desaturate)
 	game.CasePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
---	self.level:draw(true)
+	love.graphics.setPixelEffect()
 end
 
 function Box:isClicked(x,y)

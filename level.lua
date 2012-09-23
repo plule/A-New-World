@@ -28,8 +28,9 @@ function Level:draw(background)
 		love.graphics.draw(game.Background,x,y,0,self.scale,self.scale)
 	end
 	game.desaturate:send("desaturation_factor",self.level/10)
---	love.graphics.setPixelEffect(game.desaturate)
+	love.graphics.setPixelEffect(game.desaturate)
 	love.graphics.draw(game.Batiment,x+250*self.scale,y+103*self.scale,0,self.scale,self.scale)
+	love.graphics.setPixelEffect()
 
 	love.graphics.push()
 	love.graphics.translate(x,y)
