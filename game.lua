@@ -11,7 +11,7 @@ function game:init()
 	nBoxesX = 6
 	nBoxesY = 6
 	self.Background = love.graphics.newImage('pics/back01.jpg')
-	self.Batiment = love.graphics.newImage('pics/batcool.jpg')
+	self.Batiment = love.graphics.newImage('pics/bat.jpg')
 	self.Miniature = love.graphics.newImage('pics/miniature.png')
 	local casePic = love.graphics.newImage('pics/casenormal.png')
 	self.CasePics = {}
@@ -47,8 +47,17 @@ function game:init()
 	local BossPic = love.graphics.newImage('pics/boss.png')
 	self.Boss = newAnimation(BossPic, 400, 400, 0.2, 0)
 
-	self.BossChar = love.graphics.newImage('pics/bossChar.png')
-	self.Space = love.graphics.newImage('pics/space.png')
+	self.Space = love.graphics.newImage('pics/space.jpg')
+
+	local jumpBossPic = love.graphics.newImage('pics/boss-jump.png')
+	self.JumpBoss = newAnimation(jumpBossPic, 400, 400, 0.2, 0)
+	self.JumpBoss:setDelay(2,2)
+--	self.JumpBoss:setMode('once')
+
+	self.BossVide = love.graphics.newImage('pics/boss-vide.png')
+
+	local BossBallPic = love.graphics.newImage('pics/boss-ball.png')
+	self.BossBall = newAnimation(BossBallPic, 400, 400, 0.2, 0)
 
 	self.desaturate = love.graphics.newPixelEffect(love.filesystem.read('desaturate.frag'))
 
@@ -88,22 +97,28 @@ function game:init()
 				self.level:gratte(nBox)
 			end
 		end)
+	Font = love.graphics.newFont(50)
 end
 
 function game:enter()
 	self.camera = Camera(Width/2,Height/2, 1, 0)
-	self.level = Level(0,0, 10)
+	self.level = Level(0,0, 1)
 	self.level:generateBoxes()
 	self.nextLevel = nil
 
 	self.switching = false
 	self.zoomTween = nil
-	self.moveTween = nilb
+	self.moveTween = nil
+
+	self.printBoss = false
+	self.boss = {x=Width/2,y=Height/2,scale=1}
 end
 
 function game:update(dt)
 	Timer.update(dt)
 	self.Boss:update(dt)
+	self.JumpBoss:update(dt)
+	self.BossBall:update(dt)
 	for _,case in ipairs(self.CasePics) do
 		case:update(dt)
 	end
@@ -136,6 +151,9 @@ function game:draw()
 	love.graphics.draw(self.Background,0,0)
 	self.camera:attach()
 	if(self.drawSpace) then
+		if(self.isEnding) then
+			love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
+		end
 		love.graphics.draw(self.Background,0,0)
 	end
 	self.level:draw(false)
@@ -148,13 +166,19 @@ function game:draw()
 		love.graphics.draw(self.Space,0,Height)
 	end
 	self.camera:detach()
-	if(self.boss) then
-		love.graphics.setColorMode('replace')
-		love.graphics.draw(self.BossChar, Width/2-self.BossChar:getWidth()/2, Height/2-self.BossChar:getHeight()/2)
+	if(self.printBoss) then
+		love.graphics.setColor(255,255,255)
+		self.BossBall:draw(self.boss.x, self.boss.y,-self.camera.rot,self.boss.scale,self.boss.scale,200,200)
 	end
-	love.graphics.setLine(1,'smooth')
-	love.graphics.setColor(255,255,255)
---	love.graphics.print("A New World", 10, 10)
+--	self.credit = true
+	if(self.credit) then
+		love.graphics.setFont(Font)
+		love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
+		love.graphics.printf("A New World", 0, Height/2, Width, 'center')
+	end
+	if(self.isEnding) then
+		love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
+	end
 end
 
 function game:switchToNextLevel(box)
@@ -178,32 +202,43 @@ function game:triggerEnd(bossBox)
 	self.bossBox = bossBox
 	local destX,destY = bossBox.level:getPosition()
 	local zoom = boxSizeX/400
-	tween(5, self.camera, {x=destX,y=destY}, 'outQuint')
+	tween(5, self.camera, {x=destX-12,y=destY+10}, 'outQuint')
 	tween(6, self.camera, {zoom=1/zoom}, 'inQuad',
 		  function()
-			  self:end1()
+			  self:end0()
 		  end)
 end
 
+function game:end0()
+	Timer.add(3, function() self:end1() end)
+end
+
 function game:end1()
-	-- Boss se lève et va vers la fenêtre
-	self:end2()
+	self.JumpBoss:reset()
+	self.bossBox.type = 'jumping'
+	Timer.add(3.35, function()self:end2()end)
 end
 
 function game:end2()
+	self.BossBall:reset()
+	self.printBoss = true
 	self.bossBox.type = 'empty'
-	self.boss = true
 	self.drawSpace = true
 	tween(20, self.camera, {y = Height}, 'linear', function()self:end3()end)
 end
 
 function game:end3()
-	tween(3, self.camera, {x = Width/2, zoom = 1, rot = math.pi}, 'inOutQuad')
+	tween(3, self.camera, {x = Width/2, zoom = 1, rot = math.pi}, 'outQuad')
+	tween(3, self.boss, {scale = 0.5}, 'outQuad')
 	tween(3, self.camera, {y = Height + 100}, 'inQuad', function()self:end4()end)
 end
 
 function game:end4()
-	tween(20, self.camera, {y = Height + 1536}, 'outQuad')
+	tween(20, self.camera, {y = Height + 1536}, 'outQuad', function()self:end5()end)
+end
+
+function game:end5()
+	tween(8, self.boss, {y = Height/2 - 200, scale = 0}, 'inOutQuad', function()self.credit=true end)
 end
 
 function game:mousepressed(x,y)

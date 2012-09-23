@@ -50,6 +50,10 @@ function Box:draw(i)
 		game.HippiePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
 	elseif(self.type == 'boss') then
 		game.Boss:draw(x,y,0,boxSizeX/400, boxSizeY/400)
+	elseif(self.type == 'jumping') then
+		game.JumpBoss:draw(x,y,0,boxSizeX/400, boxSizeY/400)
+	elseif(self.type == 'empty') then
+		love.graphics.draw(game.BossVide,x,y,0,boxSizeX/400, boxSizeY/400)
 	end
 end
 
