@@ -1,5 +1,6 @@
 Camera = require 'hump.camera'
 Level = require 'level'
+Timer = require 'hump.timer'
 --Box = require 'box'
 local tween = require 'tween.tween'
 require("AnAL")
@@ -11,7 +12,8 @@ function game:init()
 	nBoxesY = 6
 	self.Background = love.graphics.newImage('pics/back01.jpg')
 	self.Batiment = love.graphics.newImage('pics/batcool.jpg')
-	local casePic = love.graphics.newImage('pics/casetest.jpg')
+	self.Miniature = love.graphics.newImage('pics/miniature.png')
+	local casePic = love.graphics.newImage('pics/casegrate.png')
 	self.CasePics = {}
 	for i = 1,nBoxesX*nBoxesY do
 		local case = newAnimation(casePic, 400, 400, 0.2, 0)
@@ -29,6 +31,9 @@ function game:init()
 	boxSpaceY = 25
 	boxStartX = 300
 	boxStartY = 153
+	rainSlope = 100
+	rainSize = 100
+	rainSpeed = 3100
 	
 	boxFactor = Height/casePic:getHeight()
 	screenFactor = 0.0185
@@ -42,7 +47,7 @@ function game:enter()
 
 	self.switching = false
 	self.zoomTween = nil
-	self.moveTween = nil
+	self.moveTween = nilb
 end
 
 function game:generateLevel(level)
@@ -50,14 +55,22 @@ function game:generateLevel(level)
 end
 
 function game:update(dt)
+	Timer.update(dt)
 	for _,case in ipairs(self.CasePics) do
 		case:update(dt)
+	end
+	self.level:update(dt)
+	if(self.nextLevel) then
+		self.nextLevel:update(dt)
 	end
 	tween.update(dt)
 	if(self.switching and not self.zoomTween and not self.moveTween) then
 		self.switching = false
 		self.camera.zoom=1
 		self.camera.x, self.camera.y = Width/2,Height/2
+		Timer.cancel(self.level.rainGen)
+		self.level.frontRain = nil
+		self.level = nil
 		self.level = self.nextLevel
 		self.level:setScale(1)
 		self.level:setPosition(0,0)
@@ -68,11 +81,14 @@ end
 function game:draw()
 	love.graphics.draw(self.Background,0,0)
 	self.camera:attach()
-	self.level:draw(false)
 	if self.nextLevel then
 		self.nextLevel:draw(true)
 	end
+	self.level:draw(false)
 	self.camera:detach()
+	love.graphics.setLine(1,'smooth')
+	love.graphics.setColor(255,255,255)
+
 	love.graphics.print("A New World", 10, 10)
 end
 

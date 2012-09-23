@@ -23,6 +23,7 @@ function Box:draw(i)
 	local x = self.x
 	local y = self.y
 	local sizeX,sizeY = self.sizeX, self.sizeY
+	love.graphics.draw(game.Miniature,self.level.dx,self.level.dy,screenFactor,screenFactor)
 	game.CasePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
 --	self.level:draw(true)
 end
