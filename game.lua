@@ -13,15 +13,22 @@ function game:init()
 	self.Background = love.graphics.newImage('pics/back01.jpg')
 	self.Batiment = love.graphics.newImage('pics/batcool.jpg')
 	self.Miniature = love.graphics.newImage('pics/miniature.png')
-	local casePic = love.graphics.newImage('pics/casegrate.png')
+	local casePic = love.graphics.newImage('pics/casenormal.png')
 	self.CasePics = {}
 	for i = 1,nBoxesX*nBoxesY do
 		local case = newAnimation(casePic, 400, 400, 0.2, 0)
 		case:update(math.random())
 		table.insert(self.CasePics,case)
 	end
-	self.Case = newAnimation(casePic, 400, 400, 0.2, 0)
-	self.Case:setMode("loop")
+
+	local grattePic = love.graphics.newImage('pics/casegrate.png')
+	self.GrattePics = {}
+	for i = 1,nBoxesX*nBoxesY do
+		local case = newAnimation(grattePic, 400, 400, 0.2, 0)
+		case:setMode('once')
+		case:update(math.random()*5)
+		table.insert(self.GrattePics,case)
+	end
 
 	self.desaturate = love.graphics.newPixelEffect(love.filesystem.read('desaturate.frag'))
 
@@ -37,6 +44,15 @@ function game:init()
 	
 	boxFactor = Height/casePic:getHeight()
 	screenFactor = 0.0185
+
+	Timer.addPeriodic(
+		0.1,
+		function()
+			if math.random() < 0.2 then
+				local nBox = math.random(1,nBoxesX*nBoxesY)
+				self.level:gratte(nBox)
+			end
+		end)
 end
 
 function game:enter()
@@ -57,6 +73,9 @@ end
 function game:update(dt)
 	Timer.update(dt)
 	for _,case in ipairs(self.CasePics) do
+		case:update(dt)
+	end
+	for _,case in ipairs(self.GrattePics) do
 		case:update(dt)
 	end
 	self.level:update(dt)

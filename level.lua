@@ -66,6 +66,15 @@ function Level:setScale(scale)
 	self.scale = scale
 end
 
+function Level:gratte(ibox)
+	local box = self.boxes[ibox]
+	if box then
+		box:gratte(ibox)
+	else
+		dbg("Box not found can't gratte")
+	end
+end
+
 function Level:generateBoxes()
 	self.boxes = {}
 	local boxes = self.boxes
