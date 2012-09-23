@@ -35,12 +35,16 @@ function Box:draw(i)
 	end
 	game.desaturate:send("desaturation_factor",self.level.level/10)
 	love.graphics.setPixelEffect(game.desaturate)
-	if(self.gratteTimer) then
-		game.GrattePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
-	else
-		game.CasePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
+	if(self.type == 'normal') then
+		if(self.gratteTimer) then
+			game.GrattePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
+		else
+			game.CasePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
+		end
+		love.graphics.setPixelEffect()
+	elseif(self.type == 'hippie') then
+		game.HippiePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
 	end
-	love.graphics.setPixelEffect()
 end
 
 function Box:isClicked(x,y)
@@ -57,6 +61,10 @@ function Box:gratte(nBox)
 		game.GrattePics[nBox]:play()
 		self.gratteTimer = Timer.add(3, function() self.gratteTimer = nil end)
 	end
+end
+
+function Box:setLevel(level)
+	self.level.level = level
 end
 
 return Box

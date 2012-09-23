@@ -79,14 +79,34 @@ function Level:generateBoxes()
 	self.boxes = {}
 	local boxes = self.boxes
 	local y = boxStartY
+	local normals = {}
+	local hippies = {}
 	for i=1,nBoxesY do
 		local x = boxStartX
 		for j=1,nBoxesX do
-			table.insert(boxes, Box(x,y,boxSizeX,boxSizeY,'type',self.level+1,screenFactor))
+			local level = self.level-1
+			if level == 0 then level = 1 end
+			local box = Box(x,y,boxSizeX,boxSizeY,'normal',level,screenFactor)
+			table.insert(boxes, box)
+			table.insert(normals, box)
 			x = x + boxSizeX + boxSpaceX
 		end
 		y = y + boxSizeY + boxSpaceY
 	end
+	for i=1,game.nbHippie[self.level] do
+		local normalKeys = {}
+		for k,_ in pairs(normals) do
+			table.insert(normalKeys, k)
+		end
+		local exNormal = table.remove(normals, math.random(normalKeys[#normalKeys]))
+		exNormal.type = 'hippie'
+		exNormal:setLevel(self.level+1)
+	end
+	print("=============================")
+	for _,box in pairs(self.boxes) do
+		print(box.type,box.level.level)
+	end
+
 	self.rainGen = Timer.addPeriodic(
 		0.01, function()
 			table.insert(self.frontRain,{x=math.random(0,Width-100),y=-rainSize})

@@ -30,6 +30,21 @@ function game:init()
 		table.insert(self.GrattePics,case)
 	end
 
+	local HippiePic = love.graphics.newImage('pics/caserelaxA.png')
+	self.HippiePics = {}
+	for i = 1,nBoxesX*nBoxesY do
+		local case = newAnimation(HippiePic, 400, 400, 0.2, 0)
+		for i = 1,7 do
+			case:addFrame((7-i)*400,0,400,400,0.2)
+		end
+		case:setDelay(7,3)
+		case:setDelay(1,2)
+
+		case:update(math.random()*5)
+		table.insert(self.HippiePics,case)
+	end
+	
+
 	self.desaturate = love.graphics.newPixelEffect(love.filesystem.read('desaturate.frag'))
 
 	boxSizeX = 50
@@ -41,6 +56,19 @@ function game:init()
 	rainSlope = 100
 	rainSize = 100
 	rainSpeed = 3100
+
+	game.nbHippie = {
+		1,
+		2,
+		3,
+		4,
+		6,
+		8,
+		10,
+		15,
+		25,
+		36
+	}
 	
 	boxFactor = Height/casePic:getHeight()
 	screenFactor = 0.0185
@@ -57,7 +85,7 @@ end
 
 function game:enter()
 	self.camera = Camera(Width/2,Height/2, 1, 0)
-	self.level = Level(0,0, 0)
+	self.level = Level(0,0, 1)
 	self.level:generateBoxes()
 	self.nextLevel = nil
 
@@ -76,6 +104,9 @@ function game:update(dt)
 		case:update(dt)
 	end
 	for _,case in ipairs(self.GrattePics) do
+		case:update(dt)
+	end
+	for _,case in ipairs(self.HippiePics) do
 		case:update(dt)
 	end
 	self.level:update(dt)
