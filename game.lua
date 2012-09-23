@@ -4,10 +4,12 @@ Timer = require 'hump.timer'
 --Box = require 'box'
 local tween = require 'tween.tween'
 require("AnAL")
+require("music")
 
 game = Gamestate.new()
 
 function game:init()
+	Music:load()
 	nBoxesX = 6
 	nBoxesY = 6
 	self.Background = love.graphics.newImage('pics/back01.jpg')
@@ -73,10 +75,8 @@ function game:init()
 	self.isEnding = false
 	game.nbHippie = {
 		1,
-		2,
 		3,
 		4,
-		6,
 		8,
 		10,
 		15,
@@ -112,6 +112,7 @@ function game:enter()
 
 	self.printBoss = false
 	self.boss = {x=Width/2,y=Height/2,scale=1}
+	Music:start()
 end
 
 function game:update(dt)
@@ -145,6 +146,7 @@ function game:update(dt)
 		self.level:setPosition(0,0)
 		self.nextLevel = nil
 	end
+	Music:update()
 end
 
 function game:draw()
