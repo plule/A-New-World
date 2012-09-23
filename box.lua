@@ -44,6 +44,8 @@ function Box:draw(i)
 		love.graphics.setPixelEffect()
 	elseif(self.type == 'hippie') then
 		game.HippiePics[i]:draw(x,y,0,boxSizeX/400, boxSizeY/400)
+	elseif(self.type == 'boss') then
+		game.Boss:draw(x,y,0,boxSizeX/400, boxSizeY/400)
 	end
 end
 

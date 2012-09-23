@@ -39,7 +39,7 @@ function Level:draw(background)
 --		love.graphics.setPixelEffect(game.desaturate)
 		box:draw(i)
 	end
---	love.graphics.setPixelEffect()
+	love.graphics.setPixelEffect()
 	love.graphics.setLine(2,'smooth')
 	love.graphics.setColor(200,200,255,255)
 	for _,rain in pairs(self.frontRain) do
@@ -87,8 +87,12 @@ function Level:generateBoxes()
 			local level = self.level-1
 			if level == 0 then level = 1 end
 			local box = Box(x,y,boxSizeX,boxSizeY,'normal',level,screenFactor)
+			if(i==1 and j==1) then
+				box.type = 'boss'
+			else
+				table.insert(normals, box)
+			end
 			table.insert(boxes, box)
-			table.insert(normals, box)
 			x = x + boxSizeX + boxSpaceX
 		end
 		y = y + boxSizeY + boxSpaceY
@@ -101,10 +105,6 @@ function Level:generateBoxes()
 		local exNormal = table.remove(normals, math.random(normalKeys[#normalKeys]))
 		exNormal.type = 'hippie'
 		exNormal:setLevel(self.level+1)
-	end
-	print("=============================")
-	for _,box in pairs(self.boxes) do
-		print(box.type,box.level.level)
 	end
 
 	self.rainGen = Timer.addPeriodic(

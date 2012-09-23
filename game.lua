@@ -43,6 +43,9 @@ function game:init()
 		case:update(math.random()*5)
 		table.insert(self.HippiePics,case)
 	end
+
+	local BossPic = love.graphics.newImage('pics/boss.png')
+	self.Boss = newAnimation(BossPic, 400, 400, 0.2, 0)
 	
 
 	self.desaturate = love.graphics.newPixelEffect(love.filesystem.read('desaturate.frag'))
@@ -67,7 +70,7 @@ function game:init()
 		10,
 		15,
 		25,
-		36
+		34
 	}
 	
 	boxFactor = Height/casePic:getHeight()
@@ -100,6 +103,7 @@ end
 
 function game:update(dt)
 	Timer.update(dt)
+	self.Boss:update(dt)
 	for _,case in ipairs(self.CasePics) do
 		case:update(dt)
 	end
