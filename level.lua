@@ -27,7 +27,7 @@ function Level:draw(background)
 	if background then
 		love.graphics.draw(game.Background,x,y,0,self.scale,self.scale)
 	end
-	game.desaturate:send("desaturation_factor",self.level/10)
+	game.desaturate:send("desaturation_factor",(self.level-1)/nbLevels)
 	love.graphics.setPixelEffect(game.desaturate)
 	love.graphics.draw(game.Batiment,x+250*self.scale,y+103*self.scale,0,self.scale,self.scale)
 	love.graphics.setPixelEffect()
@@ -117,8 +117,13 @@ function Level:boxUnder(x,y)
 	local underbox = nil
 	for _,box in ipairs(self.boxes) do
 		if(box:isClicked(x,y)) then
-			underbox = box
-			dbg("A box is clicked")
+			if(self.level < nbLevels and box.type ~= 'boss') then
+				underbox = box
+				dbg("A box is clicked")
+			elseif(self.level == nbLevels and box.type == 'boss') then
+				underbox = box
+				dbg("Trigger end")
+			end
 		end
 	end
 	return underbox

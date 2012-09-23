@@ -22,6 +22,10 @@ local Box = Class
   end
 }
 
+function Box:getPosition()
+	return self.x,self.y
+end
+
 function Box:draw(i)
 	local x = self.x
 	local y = self.y
