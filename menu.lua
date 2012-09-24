@@ -15,13 +15,13 @@ function menu:enter()
 end
 
 function menu:update(dt)
-	gui.group.push{grow = "down", pos = {Width/2-250,100}}
+	gui.group.push{grow = "down", pos = {Width/2-250,20}}
 
 	love.graphics.setFont(Font)
 	gui.Label{text = "A New World", align = "center"}
 
 	love.graphics.setFont(SmallFont)
-	gui.Label{text = "This game has been created in 48h for the MiniLD #37"}
+	gui.Label{text = "This game has been created in 48h for the MiniLD #37 (theme : not-game)", align = 'center'}
 
 	love.graphics.setFont(MenuFont)
 	if gui.Button{text = "Play"} then
@@ -33,10 +33,15 @@ function menu:update(dt)
 	if gui.Button{text = "Quit"} then
 		love.event.quit()
 	end
-	gui.group.push{spacing = 5, grow = "down", size = {500,50}}
+	gui.group.push{spacing = 5, grow = "down", size = {500,25}}
 	love.graphics.setFont(SmallFont)
 	gui.Label{text = "Controls : mouse & clic. This game has an ending"}
-	gui.Label{text = "Escape to quit"}
+	gui.Label{text = ""}
+	gui.Label{text = "A game by"}
+	gui.Label{text = " - Aurélien Aptel (graphics & drums)\
+ - Pierre Lulé (code)\
+ - Frédéric Poussigue (guitar)"}
+--	gui.Label{text = "Escape to quit"}
 	gui.group.pop{}
 	gui.group.pop{}
 end
