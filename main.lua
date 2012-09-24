@@ -1,5 +1,7 @@
 Gamestate = require 'hump.gamestate'
 game = require 'game'
+require 'music'
+Timer = require 'hump.timer'
 
 function dbg(...)
 --	print("[debug]",...)
@@ -8,7 +10,7 @@ end
 function love.load()
 	Height = love.graphics.getHeight()
 	Width = love.graphics.getWidth()
-
+	Music:load()
 	Gamestate.switch(game)
 end
 

@@ -1,15 +1,11 @@
 Camera = require 'hump.camera'
 Level = require 'level'
-Timer = require 'hump.timer'
---Box = require 'box'
 local tween = require 'tween.tween'
 require("AnAL")
-require("music")
 
 game = Gamestate.new()
 
 function game:init()
-	Music:load()
 	nBoxesX = 6
 	nBoxesY = 6
 	self.Background = love.graphics.newImage('pics/back01.jpg')
@@ -138,7 +134,7 @@ function game:update(dt)
 		self.switching = false
 		self.camera.zoom=1
 		self.camera.x, self.camera.y = Width/2,Height/2
-		Timer.cancel(self.level.rainGen)
+		Timer.cancelPeriodic(self.level.rainGen)
 		self.level.frontRain = nil
 		self.level = nil
 		self.level = self.nextLevel
@@ -146,7 +142,6 @@ function game:update(dt)
 		self.level:setPosition(0,0)
 		self.nextLevel = nil
 	end
-	Music:update()
 end
 
 function game:draw()
@@ -159,12 +154,7 @@ function game:draw()
 		love.graphics.draw(self.Background,0,0)
 	end
 	self.level:draw(false)
---	if self.nextLevel then
---		self.nextLevel:draw(true)
-	--	end
 	if(self.drawSpace) then
---		love.graphics.setColor(0,0,0)
-		--		love.graphics.rectangle("fill",0,Height,1024,200)
 		love.graphics.draw(self.Space,0,Height)
 	end
 	self.camera:detach()
@@ -172,7 +162,6 @@ function game:draw()
 		love.graphics.setColor(255,255,255)
 		self.BossBall:draw(self.boss.x, self.boss.y,-self.camera.rot,self.boss.scale,self.boss.scale,200,200)
 	end
---	self.credit = true
 	if(self.credit) then
 		love.graphics.setFont(Font)
 		love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
