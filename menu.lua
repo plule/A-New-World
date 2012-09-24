@@ -52,8 +52,3 @@ Libraries :\
  - AnAL by bartbes\
  - tween.lua by kikito",600,550,Width-500, 'left')
 end
-
-
-function menu:keypressed(key, code)
-    gui.keyboard.pressed(key, code)
-end
