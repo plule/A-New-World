@@ -93,7 +93,6 @@ function game:init()
 				self.level:gratte(nBox)
 			end
 		end)
-	Font = love.graphics.newFont(50)
 end
 
 function game:enter()
