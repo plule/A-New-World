@@ -11,6 +11,7 @@ function game:init()
 	self.Background = love.graphics.newImage('pics/back01.jpg')
 	self.Batiment = love.graphics.newImage('pics/bat.jpg')
 	self.Miniature = love.graphics.newImage('pics/miniature.png')
+	self.volume = 1
 
 	BourseMiniature = {}
 	for i=1,5 do
@@ -68,6 +69,9 @@ function game:init()
 
 	self.desaturate = love.graphics.newPixelEffect(love.filesystem.read('desaturate.frag'))
 
+	EndMusic = love.audio.newSource('snd/end.ogg','stream')
+	SpaceMusic = love.audio.newSource('snd/space.ogg','stream')
+
 	boxSizeX = 50
 	boxSizeY = 50
 	boxSpaceX = 25
@@ -120,6 +124,7 @@ function game:enter()
 end
 
 function game:update(dt)
+	love.audio.setVolume(self.volume)
 	Timer.update(dt)
 	self.Boss:update(dt)
 	self.JumpBoss:update(dt)
@@ -202,6 +207,7 @@ function game:switchToNextLevel(box)
 end
 
 function game:triggerEnd(bossBox)
+	tween(17, self, {volume=0},'linear')
 	self.isEnding = true
 	self.bossBox = bossBox
 	local destX,destY = bossBox.level:getPosition()
@@ -224,7 +230,10 @@ function game:end1()
 end
 
 function game:end2()
+	love.audio.stop()
+	self.volume = 1
 	self.BossBall:reset()
+	EndMusic:play()
 	self.printBoss = true
 	self.bossBox.type = 'empty'
 	self.drawSpace = true
@@ -234,6 +243,7 @@ function game:end2()
 end
 
 function game:end3()
+	SpaceMusic:play()
 	tween(3, self.camera, {x = Width/2, zoom = 1, rot = math.pi}, 'inOutQuad')
 	tween(3, self.boss, {scale = 0.5}, 'inOutQuad')
 	tween(3, self.camera, {y = Height + 100}, 'inQuad', function()self:end4()end)
