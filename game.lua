@@ -164,10 +164,15 @@ function game:draw()
 	if(self.credit) then
 		love.graphics.setFont(Font)
 		love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
-		love.graphics.printf("A New World", 0, Height/2, Width, 'center')
+		love.graphics.printf("A New World", 0, 300, Width, 'center')
+		love.graphics.setFont(SmallFont)
+		love.graphics.printf("A Game by\
+Aurélien Aptel (graphics & drums)\
+Pierre Lulé (code)\
+Frédéric Poussigue (guitar)", 0, 380, Width, 'center')
 	end
 	if(self.isEnding) then
-		love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
+--		love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
 	end
 end
 
@@ -214,6 +219,8 @@ function game:end2()
 	self.printBoss = true
 	self.bossBox.type = 'empty'
 	self.drawSpace = true
+	rainSpeed = 300
+	Timer.setDelay(self.level.rainGen, 0.1)
 	tween(20, self.camera, {y = Height}, 'linear', function()self:end3()end)
 end
 
