@@ -98,7 +98,7 @@ end
 
 function game:enter()
 	self.camera = Camera(Width/2,Height/2, 1, 0)
-	self.level = Level(0,0, 1)
+	self.level = Level(0,0, 8)
 	self.level:generateBoxes()
 	self.nextLevel = nil
 
@@ -193,8 +193,8 @@ function game:triggerEnd(bossBox)
 	self.bossBox = bossBox
 	local destX,destY = bossBox.level:getPosition()
 	local zoom = boxSizeX/400
-	tween(5, self.camera, {x=destX-12,y=destY+10}, 'outQuint')
-	tween(6, self.camera, {zoom=1/zoom}, 'inQuad',
+	tween(5, self.camera, {x=destX-12,y=destY+10}, 'inOutQuad')
+	tween(9, self.camera, {zoom=1/zoom}, 'inOutQuad',
 		  function()
 			  self:end0()
 		  end)
@@ -219,8 +219,8 @@ function game:end2()
 end
 
 function game:end3()
-	tween(3, self.camera, {x = Width/2, zoom = 1, rot = math.pi}, 'outQuad')
-	tween(3, self.boss, {scale = 0.5}, 'outQuad')
+	tween(3, self.camera, {x = Width/2, zoom = 1, rot = math.pi}, 'inOutQuad')
+	tween(3, self.boss, {scale = 0.5}, 'inOutQuad')
 	tween(3, self.camera, {y = Height + 100}, 'inQuad', function()self:end4()end)
 end
 
