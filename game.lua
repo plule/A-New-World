@@ -97,7 +97,7 @@ end
 
 function game:enter()
 	self.camera = Camera(Width/2,Height/2, 1, 0)
-	self.level = Level(0,0, 8)
+	self.level = Level(0,0, 1)
 	self.level:generateBoxes()
 	self.nextLevel = nil
 

@@ -13,6 +13,7 @@ Music = {
 
 
 local function getLevel()
+	if(game.nextLevel) then return game.nextLevel.level end
 	return game.level.level
 end
 

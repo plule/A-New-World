@@ -12,9 +12,9 @@ function love.load()
 	Height = love.graphics.getHeight()
 	Width = love.graphics.getWidth()
 	Music:load()
-	Font = love.graphics.newFont(50)
-	SmallFont = love.graphics.newFont(20)
-	MenuFont = love.graphics.newFont(30)
+	Font = love.graphics.newFont('profaisal-eliteriqav1-0/Profaisal-EliteRiqaV1.0.ttf',50)
+	SmallFont = love.graphics.newFont('profaisal-eliteriqav1-0/Profaisal-EliteRiqaV1.0.ttf',20)
+	MenuFont = love.graphics.newFont('profaisal-eliteriqav1-0/Profaisal-EliteRiqaV1.0.ttf',30)
 	Gamestate.switch(menu)
 end
 
