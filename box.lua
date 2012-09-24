@@ -32,7 +32,12 @@ function Box:draw(i)
 	local sizeX,sizeY = self.sizeX, self.sizeY
 	game.desaturate:send("desaturation_factor",self.level.level/10)
 	love.graphics.setPixelEffect(game.desaturate)
-	love.graphics.draw(game.Miniature,self.dx,self.dy,0,boxSizeX/400,boxSizeY/400)
+	
+	if(self.type == 'boss' or self.type == 'jumping' or self.type == 'empty') then
+		love.graphics.draw(BourseMiniature[BourseLevel[self.level.level+1]],self.dx,self.dy,0,boxSizeX/400,boxSizeY/400)		
+	else
+		love.graphics.draw(game.Miniature,self.dx,self.dy,0,boxSizeX/400,boxSizeY/400)
+	end
 	love.graphics.setPixelEffect()
 	if(self.level == game.nextLevel) then
 		self.level:draw(true)

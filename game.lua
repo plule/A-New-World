@@ -11,6 +11,15 @@ function game:init()
 	self.Background = love.graphics.newImage('pics/back01.jpg')
 	self.Batiment = love.graphics.newImage('pics/bat.jpg')
 	self.Miniature = love.graphics.newImage('pics/miniature.png')
+
+	BourseMiniature = {}
+	for i=1,5 do
+		table.insert(BourseMiniature,love.graphics.newImage('pics/miniature-bourse-'..i..'.png'))
+	end
+
+	BourseLevel = {1,1,2,2,3,3,4,5}
+
+--	self.BourseMiniature = love.graphics.newImage('pics/miniature-bourse.png')
 	local casePic = love.graphics.newImage('pics/casenormal.png')
 	self.CasePics = {}
 	for i = 1,nBoxesX*nBoxesY do
@@ -164,12 +173,12 @@ function game:draw()
 	if(self.credit) then
 		love.graphics.setFont(Font)
 		love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
-		love.graphics.printf("A New World", 0, 300, Width, 'center')
+		love.graphics.printf("A New World", 0, 250, Width, 'center')
 		love.graphics.setFont(SmallFont)
 		love.graphics.printf("A Game by\
 Aurélien Aptel (graphics & drums)\
 Pierre Lulé (code)\
-Frédéric Poussigue (guitar)", 0, 380, Width, 'center')
+Frédéric Poussigue (guitar)", 0, 350, Width, 'center')
 	end
 	if(self.isEnding) then
 --		love.graphics.setColor(math.random(0,255),math.random(0,255),math.random(0,255))
@@ -197,8 +206,8 @@ function game:triggerEnd(bossBox)
 	self.bossBox = bossBox
 	local destX,destY = bossBox.level:getPosition()
 	local zoom = boxSizeX/400
-	tween(5, self.camera, {x=destX-12,y=destY+10}, 'inOutQuad')
-	tween(9, self.camera, {zoom=1/zoom}, 'inOutQuad',
+	tween(7, self.camera, {x=destX-12,y=destY+10}, 'inOutQuad')
+	tween(12, self.camera, {zoom=1/zoom}, 'inOutQuad',
 		  function()
 			  self:end0()
 		  end)
@@ -231,11 +240,11 @@ function game:end3()
 end
 
 function game:end4()
-	tween(20, self.camera, {y = Height + 1536}, 'outQuad', function()self:end5()end)
+	tween(20, self.camera, {y = Height + 1536}, 'linear', function()self:end5()end)
 end
 
 function game:end5()
-	tween(8, self.boss, {y = Height/2 - 200, scale = 0}, 'inOutQuad', function()self.credit=true end)
+	tween(8, self.boss, {y = Height/2 - 200, scale = 0}, 'outCirc', function()self.credit=true end)
 end
 
 function game:mousepressed(x,y)

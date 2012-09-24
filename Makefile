@@ -11,7 +11,7 @@ lin32=love-bin/love32
 lin64=love-bin/love64
 
 game=A_New_World
-sources=*.lua */*.lua
+sources=*.lua */*.lua *.frag
 res=snd/*.ogg pics/*.png pics/*.jpg */*.ttf
 readme=README.md
 version=snapshot
@@ -29,7 +29,7 @@ test :
 dist : love win lin32 lin64 osx
 
 love : $(builddir)/$(game).love
-	cp $(builddir)/$(game).love $(distdir)/$(game).love
+	cp $(builddir)/$(game).love $(distdir)/$(distname).love
 
 osx : $(builddir)/$(game).app
 	cd $(builddir); \

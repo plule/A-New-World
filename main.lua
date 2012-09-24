@@ -8,7 +8,21 @@ function dbg(...)
 --	print("[debug]",...)
 end
 
+local fakeshader = {}
+
+function fakeshader:send(...)
+end
+
+local function nop(...)
+	return fakeshader
+end
+
 function love.load()
+	if(not love.graphics.isSupported('pixeleffect')) then
+		love.graphics.setPixelEffect = nop
+		love.graphics.newPixelEffect = nop
+	end
+
 	Height = love.graphics.getHeight()
 	Width = love.graphics.getWidth()
 	Music:load()
