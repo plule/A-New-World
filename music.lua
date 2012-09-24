@@ -49,4 +49,3 @@ function Music:start()
 		end)
 	self:check()
 end
-

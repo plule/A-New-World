@@ -33,21 +33,24 @@ function menu:update(dt)
 	if gui.Button{text = "Quit"} then
 		love.event.quit()
 	end
-	gui.group.push{spacing = 5, grow = "down", size = {500,25}}
-	love.graphics.setFont(SmallFont)
-	gui.Label{text = "Controls : mouse & clic. This game has an ending"}
-	gui.Label{text = ""}
-	gui.Label{text = "A game by"}
-	gui.Label{text = " - Aurélien Aptel (graphics & drums)\
- - Pierre Lulé (code)\
- - Frédéric Poussigue (guitar)"}
---	gui.Label{text = "Escape to quit"}
-	gui.group.pop{}
-	gui.group.pop{}
 end
 
 function menu:draw()
 	gui.core.draw()
+	love.graphics.setFont(SmallFont)
+	love.graphics.printf("Controls : mouse & clic. This game has an ending", 0, 500, Width, 'center')
+
+	love.graphics.printf("A game by :\
+ - Aurélien Aptel (graphics & drums)\
+ - Pierre Lulé (code)\
+ - Frédéric Poussigue (guitar)",200,550,300, 'left')
+	
+   love.graphics.printf("Framework : LÖVE (love2d.org)\
+Libraries :\
+ - Quickie by vrld\
+ - hump by vrld\
+ - AnAL by bartbes\
+ - tween.lua by kikito",600,550,Width-500, 'left')
 end
 
 
