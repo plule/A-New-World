@@ -12,7 +12,7 @@ lin64=love-bin/love64
 
 game=A_New_World
 sources=*.lua */*.lua
-res=snd/*.ogg img/*.png
+res=snd/*.ogg pics/*.png pics/*.jpg */*.ttf
 readme=README.md
 version=snapshot
 
