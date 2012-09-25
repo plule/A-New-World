@@ -11,8 +11,8 @@ function love.load()
 
 
 	screenFactor = 0.02
-	nBoxesX = 8
-	nBoxesY = 12
+	nBoxesX = 3
+	nBoxesY = 4
 	boxSizeX = 50
 	boxSizeY = 50
 	boxSpaceX = 10

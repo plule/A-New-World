@@ -10,13 +10,13 @@ local Box = Class
 	  self.x = x
 	  self.y = y
 	  self.type = type
-	  self.level = Level(x+5, y+5, level, screenFactor)
+	  self.level = Level(x-5, y-5, level, screenFactor)
   end
 }
 
 function Box:draw()
-	local x = self.x
-	local y = self.y
+	local x = self.x-self.sizeX/2
+	local y = self.y-self.sizeY/2
 	local sizeX,sizeY = self.sizeX, self.sizeY
 	
 	love.graphics.setColor(255,255,255)
@@ -31,8 +31,8 @@ function Box:isClicked(x,y)
 	-- dbg("Box clicked?")
 	-- dbg("x "..x.." y "..y)
 	-- dbg("x "..self.x.." y "..self.y)
-	return x >= self.x and x <= self.x + self.sizeX and
-		y >= self.y and y <= self.y + self.sizeY
+	return x >= self.x - self.sizeX/2 and x <= self.x + self.sizeX/2 and
+		y >= self.y - self.sizeY/2 and y <= self.y + self.sizeY/2
 end
 
 return Box
