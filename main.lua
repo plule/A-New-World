@@ -1,26 +1,35 @@
 Gamestate = require 'hump.gamestate'
 game = require 'game'
+require 'music'
+Timer = require 'hump.timer'
+require 'menu'
 
 function dbg(...)
-	print("[debug]",...)
+--	print("[debug]",...)
+end
+
+local fakeshader = {}
+
+function fakeshader:send(...)
+end
+
+local function nop(...)
+	return fakeshader
 end
 
 function love.load()
+	if(not love.graphics.isSupported('pixeleffect')) then
+		love.graphics.setPixelEffect = nop
+		love.graphics.newPixelEffect = nop
+	end
+
 	Height = love.graphics.getHeight()
 	Width = love.graphics.getWidth()
-
-
-	screenFactor = 0.02
-	nBoxesX = 3
-	nBoxesY = 4
-	boxSizeX = 50
-	boxSizeY = 50
-	boxSpaceX = 10
-	boxSpaceY = 10
-	boxStartX = 30
-	boxStartY = 30
-
-	Gamestate.switch(game)
+	Music:load()
+	Font = love.graphics.newFont('profaisal-eliteriqav1-0/Profaisal-EliteRiqaV1.0.ttf',50)
+	SmallFont = love.graphics.newFont('profaisal-eliteriqav1-0/Profaisal-EliteRiqaV1.0.ttf',20)
+	MenuFont = love.graphics.newFont('profaisal-eliteriqav1-0/Profaisal-EliteRiqaV1.0.ttf',30)
+	Gamestate.switch(menu)
 end
 
 function love.draw()
@@ -46,5 +55,5 @@ function love.mousepressed(x,y,button)
 end
 
 function love.mousereleased(x,y,button)
-	Gamestate.mousepressed(x,y,button)
+	Gamestate.mousereleased(x,y,button)
 end
