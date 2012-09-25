@@ -14,7 +14,7 @@ game=A_New_World
 sources=*.lua */*.lua *.frag
 res=snd/*.ogg pics/*.png pics/*.jpg */*.ttf
 readme=README.md
-version=snapshot
+version=1.0
 
 distname = $(game)-$(version)
 
